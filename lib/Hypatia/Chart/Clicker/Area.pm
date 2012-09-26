@@ -1,6 +1,6 @@
 package Hypatia::Chart::Clicker::Area;
 {
-  $Hypatia::Chart::Clicker::Area::VERSION = '0.01';
+  $Hypatia::Chart::Clicker::Area::VERSION = '0.02';
 }
 use Moose;
 use MooseX::Aliases;
@@ -71,7 +71,7 @@ sub chart
 
 alias graph=>'chart';
 
-with 'Hypatia::Chart::Clicker::XYDataSet';
+with 'Hypatia::Chart::Clicker::Role::XY';
 
 
 1;
@@ -86,13 +86,15 @@ Hypatia::Chart::Clicker::Area - Area Charts with Hypatia and Chart::Clicker
 
 =head1 VERSION
 
-version 0.01
+version 0.02
 
 =head1 ATTRIBUTES
 
 =head2 columns
 
 The required column types are C<x> and C<y> (ie the default given by L<Hypatia>).  Each of the values for this attribute may be either a string (indicating one column) or an array reference of strings (indicating several columns).  In the latter case, the number of C<x> and C<y> columns must match and each respective C<x> and C<y> column will form its own bar chart.  In the former case, the single C<x> column will act as the same C<x> column for all of the C<y> columns.
+
+If the C<columns> attribute is B<not> set, then column guessing is used as needed via the algorithm described in L<Hypatia::Chart::Clicker::Role::XY>.
 
 =head2 stacked
 

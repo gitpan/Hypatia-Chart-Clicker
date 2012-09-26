@@ -1,6 +1,6 @@
 package Hypatia::Chart::Clicker::Bubble;
 {
-  $Hypatia::Chart::Clicker::Bubble::VERSION = '0.01';
+  $Hypatia::Chart::Clicker::Bubble::VERSION = '0.02';
 }
 use Moose;
 use MooseX::Aliases;
@@ -143,7 +143,50 @@ sub _build_data_set
 
 }
 
-
+override '_guess_columns' =>sub
+{
+    my $self=shift;
+    
+    my @columns=@{$self->_setup_guess_columns};
+    
+    my $col_types={};
+    
+    if(@columns < 3)
+    {
+	confess "One or two columns are insufficient to form a bubble chart";
+    }
+    elsif(@columns == 3)
+    {
+	$col_types->{x} = $columns[0];
+        $col_types->{y} = $columns[1];
+	$col_types->{size} = $columns[2];
+    }
+    elsif(scalar(@columns) % 3 == 0)
+    {
+	while(@columns)
+	{
+		push @{$col_types->{x}},shift @columns;
+		push @{$col_types->{y}},shift @columns;
+		push @{$col_types->{size}},shift @columns;
+	}
+    }
+    elsif(scalar(@columns) % 2)
+    {
+	$col_types->{x}=shift @columns;
+	
+	while(@columns)
+	{
+		push @{$col_types->{y}}, shift @columns;
+		push @{$col_types->{size}}, shift @columns;
+	}
+    }
+    else
+    {
+	confess "Unable to guess which columns correspond to which type. Please use the 'columns' attribute";
+    }
+    
+    $self->cols(Hypatia::Columns->new({columns=>$col_types,column_types=>[qw(x y size)]}));
+};
 
 
 
@@ -213,7 +256,7 @@ override '_validate_input_data',sub
 };
 
 
-#__PACKAGE__->meta->make_immutable;
+__PACKAGE__->meta->make_immutable;
 
 1;
 
@@ -227,7 +270,7 @@ Hypatia::Chart::Clicker::Bubble - Line Charts with Hypatia and Chart::Clicker
 
 =head1 VERSION
 
-version 0.01
+version 0.02
 
 =head1 SYNOPSIS
 
@@ -240,6 +283,25 @@ This module extends L<Hypatia::Chart::Clicker>.  The C<graph> method (also known
 The required column types are C<x>, C<y>, and C<size>.  Each of the values for this attribute may be either a string (indicating one column) or an array reference of strings (indicating several columns).  If C<y> and C<size> are array references, then they must be the same size.  If C<x> is an array reference, then it also must be the same size as C<y> and C<size> (and in this case, each C<x> column will serve as x-axis values corresponding to the C<y> and C<size> columns).  Otherwise, if C<x> is a string, then the single C<x> column will serve as a common set of x-values for all C<y> and C<size> values.
 
 Of course, since C<size> represents size values for the given data set(s), please make sure that the data stored in any C<size> columns contains nonnegative values.
+
+If this column isn't provided, then Hypatia will do its best job to guess which column names of your data correspond to which types, as follows:
+
+=over 4
+
+=item 1. If there are three columns, then they'll be assigned to C<x>, C<y>, and C<size> (respectively).
+=item 2. Otherwise, if the number of columns is a multiple of 3, then the corresponding types will be
+
+	x, y, size, x, y, size,..., x, y, size
+
+(ie each consecutive triple will be assigned to C<x>, C<y>, and C<size>, respectively).
+
+=item 3. If the number of columns is odd, larger than 3, but not divisible by 3, then the first column will be assigned to type C<x>, and the remaining columns will be paired off as types:
+
+	y, size, y, size,..., y, size
+
+=item 4. If none of the above are the case, then an error is thrown.
+
+=back
 
 =head1 METHODS
 

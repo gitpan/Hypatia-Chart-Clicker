@@ -1,6 +1,6 @@
 package Hypatia::Chart::Clicker;
 {
-  $Hypatia::Chart::Clicker::VERSION = '0.01';
+  $Hypatia::Chart::Clicker::VERSION = '0.02';
 }
 use Moose;
 use Moose::Util::TypeConstraints;
@@ -19,22 +19,24 @@ has 'input_data'=>(isa=>'HashRef[ArrayRef[Num]]',is=>'ro',predicate=>'has_input_
 
 has 'data_series_names'=>(isa=>'Str|ArrayRef[Str]',is=>'ro',predicate=>'has_data_series_names');
 
-
 sub _get_data
 {
 	my $self=shift;
 	my @columns;
+	
+	$self->_guess_columns unless $self->using_columns;
+	
 	if(@_)
 	{
 		@columns=grep{defined}map{$self->columns->{$_}}@_;
 	}
 	else
 	{
-		@columns=@{$self->columns->column_types};
+		@columns = @{$self->columns->column_types};
 	}
 	
 	if($self->use_dbi)
-	{
+	{	
 		return $self->dbi->data(@columns);
 	}
 	else
@@ -42,6 +44,7 @@ sub _get_data
 		return $self->input_data;
 	}
 }
+
 
 
 sub BUILD
@@ -68,6 +71,8 @@ sub _validate_input_data
 	
 	my @column_list;
 	
+	$self->_guess_columns unless $self->using_columns;
+
 	foreach my $type(keys %{$self->columns})
 	{
 		my $col=$self->columns->{$type};
@@ -132,7 +137,7 @@ Hypatia::Chart::Clicker - Hypatia Bindings for Chart::Clicker
 
 =head1 VERSION
 
-version 0.01
+version 0.02
 
 =head1 SYNOPSIS
 

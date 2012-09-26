@@ -1,6 +1,6 @@
 package Hypatia::Chart::Clicker::Pie;
 {
-  $Hypatia::Chart::Clicker::Pie::VERSION = '0.01';
+  $Hypatia::Chart::Clicker::Pie::VERSION = '0.02';
 }
 use Moose;
 use MooseX::Aliases;
@@ -41,9 +41,9 @@ sub BUILD
 	my $self=shift;
 	my $columns=$self->columns;
 	
-	confess "Wrong number of column types" unless scalar(keys %$columns)==2;
-	confess "Wrong keys (should be 'label' and 'values')" unless scalar(grep{$_ eq 'label' or $_ eq 'values'}(keys %$columns))==2;
-	confess "Column values need to be strings" unless scalar(grep{ref $_ eq ref ""}(values %$columns)) == 2;
+	confess "Wrong number of column types" unless(scalar(keys %$columns)==2 or not $self->using_columns);
+	confess "Wrong keys (should be 'label' and 'values')" unless(scalar(grep{$_ eq 'label' or $_ eq 'values'}(keys %$columns))==2 or not $self->using_columns);
+	confess "Column values need to be strings" unless(scalar(grep{ref $_ eq ref ""}(values %$columns)) == 2 or not $self->using_columns);
 	
 }
 
@@ -133,7 +133,26 @@ sub _build_data_set
 
 }
 
-
+override '_guess_columns' =>sub
+{
+    my $self=shift;
+    
+    my @columns=@{$self->_setup_guess_columns};
+    
+    my $col_types={};
+    
+    if(@columns != 2)
+    {
+	confess "Only two data columns (of types 'label' and 'values') are allowed for pie charts";
+    }
+    else
+    {
+	$col_types->{label} = $columns[0];
+	$col_types->{values} = $columns[1];
+    }
+    
+    $self->cols(Hypatia::Columns->new({columns=>$col_types,column_types=>[qw(label values)],use_native_validation=>0}));
+};
 
 
 
@@ -157,7 +176,7 @@ override '_validate_input_data',sub
 };
 
 
-#__PACKAGE__->meta->make_immutable;
+__PACKAGE__->meta->make_immutable;
 
 1;
 
@@ -171,7 +190,7 @@ Hypatia::Chart::Clicker::Pie - Line Charts with Hypatia and Chart::Clicker
 
 =head1 VERSION
 
-version 0.01
+version 0.02
 
 =head1 SYNOPSIS
 
@@ -181,7 +200,9 @@ This module extends L<Hypatia::Chart::Clicker>.  The C<graph> method (also known
 
 =head2 columns
 
-The required column types are C<label> and C<values>.  Each of these must be a single string
+The required column types are C<label> and C<values>.  Each of these must be a single string.
+
+If this attribute isn't provided, then column guessing proceeds in the obvious manner: if there are two columns, then the first is of type C<label> and the second of type C<values>, and otherwise an error is thrown.
 
 =head2 use_gradient
 

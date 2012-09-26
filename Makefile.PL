@@ -9,11 +9,14 @@ use ExtUtils::MakeMaker 6.30;
 
 
 my %WriteMakefileArgs = (
-  "ABSTRACT" => "Hypatia Bindings for Chart::Clicker",
+  "ABSTRACT" => "Hypatia Bindings for Chart::Clicker\r",
   "AUTHOR" => "Jack Maney <jack\@jackmaney.com>",
   "BUILD_REQUIRES" => {
     "Hypatia" => 0,
-    "Test::More" => 0
+    "Hypatia::DBI::Test::SQLite" => 0,
+    "Test::More" => 0,
+    "strict" => 0,
+    "warnings" => 0
   },
   "CONFIGURE_REQUIRES" => {
     "ExtUtils::MakeMaker" => "6.30"
@@ -42,13 +45,11 @@ my %WriteMakefileArgs = (
     "Moose::Util::TypeConstraints" => 0,
     "MooseX::Aliases" => 0,
     "Scalar::Util" => 0,
-    "namespace::autoclean" => 0,
-    "strict" => 0,
-    "warnings" => 0
+    "namespace::autoclean" => 0
   },
-  "VERSION" => "0.01",
+  "VERSION" => "0.02",
   "test" => {
-    "TESTS" => "t/*.t"
+    "TESTS" => "t/*.t t/sqlite/*.t"
   }
 );
 

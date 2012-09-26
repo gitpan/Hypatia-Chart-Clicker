@@ -1,6 +1,6 @@
 package Hypatia::Chart::Clicker::Line;
 {
-  $Hypatia::Chart::Clicker::Line::VERSION = '0.01';
+  $Hypatia::Chart::Clicker::Line::VERSION = '0.02';
 }
 use Moose;
 use MooseX::Aliases;
@@ -59,11 +59,9 @@ sub chart
 alias graph=>'chart';
 
 
+with 'Hypatia::Chart::Clicker::Role::XY';
 
-
-with 'Hypatia::Chart::Clicker::XYDataSet';
-
-#__PACKAGE__->meta->make_immutable;
+__PACKAGE__->meta->make_immutable;
 
 1;
 
@@ -77,7 +75,7 @@ Hypatia::Chart::Clicker::Line - Line Charts with Hypatia and Chart::Clicker
 
 =head1 VERSION
 
-version 0.01
+version 0.02
 
 =head1 SYNOPSIS
 
@@ -89,7 +87,7 @@ This module extends L<Hypatia::Chart::Clicker>.  The C<graph> method (also known
 
 The required column types are C<x> and C<y>.  Each of the values for this attribute may be either a string (indicating one column) or an array reference of strings (indicating several columns).  In the latter case, the number of C<x> and C<y> columns must match and each respective C<x> and C<y> column will form its own line graph.  In the former case, the single C<x> column will act as the same C<x> column for all of the C<y> columns.
 
-If the C<columns> attribute is B<not> set, then the C<graph> method will look at the column names from your table or query I<in the order in which they appear>
+If the C<columns> attribute is B<not> set, then column guessing is used as needed via the algorithm described in L<Hypatia::Chart::Clicker::Role::XY>.
 
 =head2 stacked
 
