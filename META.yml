@@ -3,7 +3,7 @@ abstract: "Hypatia Bindings for Chart::Clicker\r"
 author:
   - 'Jack Maney <jack@jackmaney.com>'
 build_requires:
-  Hypatia: 0
+  Hypatia: 0.026
   Hypatia::DBI::Test::SQLite: 0
   Test::More: 0
   strict: 0
@@ -38,4 +38,4 @@ requires:
   MooseX::Aliases: 0
   Scalar::Util: 0
   namespace::autoclean: 0
-version: 0.021
+version: 0.022

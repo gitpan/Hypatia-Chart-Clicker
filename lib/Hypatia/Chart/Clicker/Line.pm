@@ -1,6 +1,6 @@
 package Hypatia::Chart::Clicker::Line;
 {
-  $Hypatia::Chart::Clicker::Line::VERSION = '0.021';
+  $Hypatia::Chart::Clicker::Line::VERSION = '0.022';
 }
 use Moose;
 use MooseX::Aliases;
@@ -75,7 +75,7 @@ Hypatia::Chart::Clicker::Line - Line Charts with Hypatia and Chart::Clicker
 
 =head1 VERSION
 
-version 0.021
+version 0.022
 
 =head1 SYNOPSIS
 
