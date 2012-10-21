@@ -1,6 +1,6 @@
 package Hypatia::Chart::Clicker::Bubble;
 {
-  $Hypatia::Chart::Clicker::Bubble::VERSION = '0.023';
+  $Hypatia::Chart::Clicker::Bubble::VERSION = '0.025';
 }
 use Moose;
 use MooseX::Aliases;
@@ -59,6 +59,8 @@ sub chart
 	
 	my $dc=$cc->get_context("default");
 	$dc->renderer(Chart::Clicker::Renderer::Bubble->new);
+	
+	$cc = $self->options->apply_to($cc);
 	
 	return $cc;
 }
@@ -270,7 +272,7 @@ Hypatia::Chart::Clicker::Bubble - Line Charts with Hypatia and Chart::Clicker
 
 =head1 VERSION
 
-version 0.023
+version 0.025
 
 =head1 SYNOPSIS
 

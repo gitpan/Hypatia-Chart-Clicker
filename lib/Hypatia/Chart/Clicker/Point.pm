@@ -1,6 +1,6 @@
 package Hypatia::Chart::Clicker::Point;
 {
-  $Hypatia::Chart::Clicker::Point::VERSION = '0.023';
+  $Hypatia::Chart::Clicker::Point::VERSION = '0.025';
 }
 use Moose;
 use MooseX::Aliases;
@@ -51,17 +51,18 @@ sub chart
 	my $dc=$cc->get_context("default");
 	$dc->renderer(Chart::Clicker::Renderer::Point->new);
 	
+	$cc = $self->options->apply_to($cc);
+	
 	return $cc;
 }
 
 alias graph=>'chart';
 
+sub BUILD
+{
+	with 'Hypatia::Chart::Clicker::Role::XY';
+}
 
-
-
-with 'Hypatia::Chart::Clicker::Role::XY';
-
-#__PACKAGE__->meta->make_immutable;
 
 1;
 
@@ -75,7 +76,7 @@ Hypatia::Chart::Clicker::Point - Scatterplots with Hypatia and Chart::Clicker
 
 =head1 VERSION
 
-version 0.023
+version 0.025
 
 =head1 SYNOPSIS
 

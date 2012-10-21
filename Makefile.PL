@@ -12,11 +12,9 @@ my %WriteMakefileArgs = (
   "ABSTRACT" => "Hypatia Bindings for Chart::Clicker\r",
   "AUTHOR" => "Jack Maney <jack\@jackmaney.com>",
   "BUILD_REQUIRES" => {
-    "Hypatia" => "0.026",
+    "Hypatia" => "0.027",
     "Hypatia::DBI::Test::SQLite" => 0,
-    "Test::More" => 0,
-    "strict" => 0,
-    "warnings" => 0
+    "Test::More" => 0
   },
   "CONFIGURE_REQUIRES" => {
     "ExtUtils::MakeMaker" => "6.30"
@@ -38,18 +36,26 @@ my %WriteMakefileArgs = (
     "Chart::Clicker::Renderer::StackedArea" => 0,
     "Chart::Clicker::Renderer::StackedBar" => 0,
     "Data::Dumper" => 0,
+    "Graphics::Color::RGB" => 0,
+    "Graphics::Primitive::Font" => 0,
+    "Graphics::Primitive::Insets" => 0,
     "Hypatia::Base" => 0,
     "Hypatia::Columns" => 0,
+    "Hypatia::Types" => 0,
     "Moose" => 0,
     "Moose::Role" => 0,
     "Moose::Util::TypeConstraints" => 0,
     "MooseX::Aliases" => 0,
+    "MooseX::Types" => 0,
+    "MooseX::Types::Moose" => 0,
     "Scalar::Util" => 0,
-    "namespace::autoclean" => 0
+    "namespace::autoclean" => 0,
+    "strict" => 0,
+    "warnings" => 0
   },
-  "VERSION" => "0.023",
+  "VERSION" => "0.025",
   "test" => {
-    "TESTS" => "t/*.t t/sqlite/*.t"
+    "TESTS" => "t/*.t t/sqlite/*.t t/sqlite/options/*.t t/sqlite/options/axis/*.t"
   }
 );
 

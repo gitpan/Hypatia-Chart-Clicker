@@ -1,9 +1,11 @@
 package Hypatia::Chart::Clicker;
 {
-  $Hypatia::Chart::Clicker::VERSION = '0.023';
+  $Hypatia::Chart::Clicker::VERSION = '0.025';
 }
 use Moose;
 use Moose::Util::TypeConstraints;
+use Hypatia::Chart::Clicker::Types qw(Options);
+use Hypatia::Chart::Clicker::Options;
 use namespace::autoclean;
 
 extends 'Hypatia::Base';
@@ -20,6 +22,8 @@ has '+input_data'=>(isa=>'HashRef[ArrayRef[Num]]',is=>'ro');
 has 'data_series_names'=>(isa=>'Str|ArrayRef[Str]',is=>'ro',predicate=>'has_data_series_names');
 
 
+
+has 'options'=>(isa=>Options, is=>"ro", coerce=>1, default=>sub{ Hypatia::Chart::Clicker::Options->new });
 
 
 
@@ -48,7 +52,7 @@ Hypatia::Chart::Clicker - Hypatia Bindings for Chart::Clicker
 
 =head1 VERSION
 
-version 0.023
+version 0.025
 
 =head1 SYNOPSIS
 
@@ -79,6 +83,10 @@ This data, if provided, must be a hash reference of array references, where the 
 =head2 data_series_names
 
 In C<Chart::Clicker>, every chart has one or more data set (ie L<Chart::Clicker::Data::Set>) and each data set has one or more data series (ie L<Chart::Clicker::Data::Series>).  Each data series has an optional C<name> attribute.  The value(s) for this attribute (either a string or an array reference of strings) is passed directly into the C<name> attribute for each data series.  This attribute is optional, and if it's not used, then a submodule-dependent default will be supplied (usually the relevant C<y> column name).
+
+=head2 options
+
+This is a hash reference of options. Check out L<Hypatia::Chart::Clicker::Options> for more information.
 
 =head1 EXAMPLES
 

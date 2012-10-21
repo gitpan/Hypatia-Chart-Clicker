@@ -1,6 +1,6 @@
 package Hypatia::Chart::Clicker::Line;
 {
-  $Hypatia::Chart::Clicker::Line::VERSION = '0.023';
+  $Hypatia::Chart::Clicker::Line::VERSION = '0.025';
 }
 use Moose;
 use MooseX::Aliases;
@@ -53,15 +53,17 @@ sub chart
 	my $dc=$cc->get_context("default");    
 	$dc->renderer->additive($self->stacked);        
 	
+	$cc = $self->options->apply_to($cc);
+	
 	return $cc;
 }
 
 alias graph=>'chart';
 
-
-with 'Hypatia::Chart::Clicker::Role::XY';
-
-__PACKAGE__->meta->make_immutable;
+sub BUILD
+{
+	with 'Hypatia::Chart::Clicker::Role::XY';
+}
 
 1;
 
@@ -75,7 +77,7 @@ Hypatia::Chart::Clicker::Line - Line Charts with Hypatia and Chart::Clicker
 
 =head1 VERSION
 
-version 0.023
+version 0.025
 
 =head1 SYNOPSIS
 

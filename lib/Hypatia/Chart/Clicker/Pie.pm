@@ -1,6 +1,6 @@
 package Hypatia::Chart::Clicker::Pie;
 {
-  $Hypatia::Chart::Clicker::Pie::VERSION = '0.023';
+  $Hypatia::Chart::Clicker::Pie::VERSION = '0.025';
 }
 use Moose;
 use MooseX::Aliases;
@@ -92,6 +92,8 @@ sub chart
 	}
 	
 	$dc->renderer($renderer);
+	
+	$cc = $self->options->apply_to($cc);
 	
 	return $cc;
 }
@@ -190,7 +192,7 @@ Hypatia::Chart::Clicker::Pie - Line Charts with Hypatia and Chart::Clicker
 
 =head1 VERSION
 
-version 0.023
+version 0.025
 
 =head1 SYNOPSIS
 

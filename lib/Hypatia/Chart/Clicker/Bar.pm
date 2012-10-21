@@ -1,6 +1,6 @@
 package Hypatia::Chart::Clicker::Bar;
 {
-  $Hypatia::Chart::Clicker::Bar::VERSION = '0.023';
+  $Hypatia::Chart::Clicker::Bar::VERSION = '0.025';
 }
 use Moose;
 use MooseX::Aliases;
@@ -71,12 +71,17 @@ sub chart
 	
 	$dc->renderer($renderer->new);     
 	
+	$cc = $self->options->apply_to($cc);
+	
 	return $cc;
 }
 
 alias graph=>'chart';
 
-with 'Hypatia::Chart::Clicker::Role::XY';
+sub BUILD
+{
+	with 'Hypatia::Chart::Clicker::Role::XY';
+}
 
 
 1;
@@ -91,7 +96,7 @@ Hypatia::Chart::Clicker::Bar - Bar Charts with Hypatia and Chart::Clicker
 
 =head1 VERSION
 
-version 0.023
+version 0.025
 
 =head1 ATTRIBUTES
 

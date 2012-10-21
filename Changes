@@ -1,5 +1,10 @@
 Revision history for Hypatia-Chart-Clicker
 
+0.025     2012-10-21 00:29:43 America/Chicago
+
+- Added a type library.
+- Added options via Hypatia::Chart::Clicker::Options and Hypatia::Chart::Clicker::Options::Axis
+
 0.023     2012-10-02 17:19:22 America/Chicago
 
 - Fixed a bug in the test setup_guess_columns.t that caused failures for users who don't have DBD::SQLite installed.
