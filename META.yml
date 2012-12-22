@@ -1,15 +1,15 @@
 ---
-abstract: "Hypatia Bindings for Chart::Clicker\r"
+abstract: 'Hypatia Bindings for Chart::Clicker'
 author:
   - 'Jack Maney <jack@jackmaney.com>'
 build_requires:
-  Hypatia: 0.027
+  Hypatia: 0
   Hypatia::DBI::Test::SQLite: 0
   Test::More: 0
 configure_requires:
   ExtUtils::MakeMaker: 6.30
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.300025, CPAN::Meta::Converter version 2.120921'
+generated_by: 'Dist::Zilla version 4.300028, CPAN::Meta::Converter version 2.120921'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -31,6 +31,7 @@ requires:
   Graphics::Color::RGB: 0
   Graphics::Primitive::Font: 0
   Graphics::Primitive::Insets: 0
+  Hypatia: 0.029
   Hypatia::Base: 0
   Hypatia::Columns: 0
   Hypatia::Types: 0
@@ -44,4 +45,4 @@ requires:
   namespace::autoclean: 0
   strict: 0
   warnings: 0
-version: 0.025
+version: 0.026
